@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.models.database import create_tables
-from app.routes import auth as auth_router
-from app.routes import trips as trips_router
-from app.routes import admin as admin_router
-from app.routes import notifications as notif_router
-from app.routes import wallet as wallet_router
-from app.routes import promo as promo_router
+from .models.database import create_tables
+from .routes import auth as auth_router
+from .routes import trips as trips_router
+from .routes import admin as admin_router
+from .routes import notifications as notif_router
+from .routes import wallet as wallet_router
+from .routes import promo as promo_router
 
 app = FastAPI(
     title="🚖 Kloq Ride API",
