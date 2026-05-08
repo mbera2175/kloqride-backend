@@ -86,13 +86,12 @@ def verify_otp(db: Session, phone: str, code: str, purpose: str = "login") -> OT
         db.commit()
         raise ValueError("OTP has expired. Please request a new one.")
 
-    record.attempts += 1
-    if record.attempts > MAX_ATTEMPTS:
-        record.is_used = True
-        db.commit()
-        raise ValueError("Too many wrong attempts. Please request a new OTP.")
-
     if record.otp_code != code.strip():
+        record.attempts += 1
+        if record.attempts >= MAX_ATTEMPTS:
+            record.is_used = True
+            db.commit()
+            raise ValueError("Too many wrong attempts. Please request a new OTP.")
         db.commit()
         remaining = MAX_ATTEMPTS - record.attempts
         raise ValueError(f"Wrong OTP. {remaining} attempt(s) remaining.")
